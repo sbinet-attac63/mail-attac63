@@ -5,16 +5,23 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
+	"os"
+	"strings"
+
+	"golang.org/x/xerrors"
+	"gopkg.in/gomail.v2"
 )
 
 type server struct {
 	http http.Server
 	ln   net.Listener
+	dbg  bool
 }
 
 func newServer(addr string) *server {
@@ -23,7 +30,7 @@ func newServer(addr string) *server {
 		panic(err)
 	}
 
-	srv := &server{ln: ln}
+	srv := &server{ln: ln, dbg: *doDebug}
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", srv.rootHandle)
@@ -61,6 +68,83 @@ func (srv *server) sendHandle(w http.ResponseWriter, req *http.Request) {
 
 	log.Printf("subject: %q", msg.Subject)
 	log.Printf("body:\n%s\n===\n", msg.Body)
+
+	err = srv.send(msg.Subject, msg.Body)
+	if err != nil {
+		log.Printf("could not send emails: %+v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(nil)
+	return
+}
+
+func (srv *server) send(subject, body string) error {
+	var (
+		rcpts = srv.loadAddresses()
+		m     = gomail.NewMessage()
+		err   error
+		ok    = true
+	)
+
+	body = htmlify(body)
+
+	for _, rcpt := range rcpts {
+		m.SetHeader("From", user)
+		m.SetHeader("Bcc", rcpt)
+		m.SetHeader("Subject", subject)
+		m.SetBody("text/html", body)
+
+		d := gomail.NewDialer(smtp, 465, user, passwd)
+		e := d.DialAndSend(m)
+		if e != nil {
+			ok = false
+			log.Printf("could not send email to %q: %+v", rcpt, e)
+			if err == nil {
+				err = e
+			}
+		}
+	}
+
+	if !ok {
+		return xerrors.Errorf("could not send emails: %w", err)
+	}
+	log.Printf("emails sent successfully")
+
+	return nil
+}
+
+func (srv *server) loadAddresses() []string {
+	var addrs []string
+
+	f, err := os.Open("./liste.csv")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	r := csv.NewReader(f)
+	r.Comma = ','
+
+	recs, err := r.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+	for i, rec := range recs {
+		if i == 0 {
+			continue
+		}
+		addrs = append(addrs, rec[2])
+	}
+	return addrs
+}
+
+func htmlify(s string) string {
+	s = strings.Replace(s, "\n", "<br>\n", -1)
+	return s
 }
 
 const page = `<html>

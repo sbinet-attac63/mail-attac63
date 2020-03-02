@@ -12,13 +12,21 @@ import (
 	web "github.com/toqueteos/webbrowser"
 )
 
+var (
+	user   = "username"
+	passwd = "secret"
+	smtp   = "smtp.example.com"
+
+	doDebug = flag.Bool("dbg", true, "enable debug mode")
+)
+
 func main() {
 	log.SetPrefix("mail-attac63: ")
 	log.SetFlags(0)
 
 	var (
 		addrFlag = flag.String("addr", ":0", "[host]:port to serve")
-		webFlag  = flag.Bool("web", true, "run web browser")
+		webFlag  = flag.Bool("web", false, "run web browser")
 	)
 
 	flag.Parse()
