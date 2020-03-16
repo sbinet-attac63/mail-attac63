@@ -12,12 +12,14 @@ import (
 	web "github.com/toqueteos/webbrowser"
 )
 
+var Version = "dev"
+
 func main() {
 	log.SetPrefix("mail-attac63: ")
 	log.SetFlags(0)
 
 	var (
-		addrFlag = flag.String("addr", ":0", "[host]:port to serve")
+		addrFlag = flag.String("addr", "localhost:0", "[host]:port to serve")
 		webFlag  = flag.Bool("web", true, "run web browser")
 	)
 
