@@ -14,8 +14,7 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/xerrors"
-	"gopkg.in/gomail.v2"
+	gomail "gopkg.in/gomail.v2"
 )
 
 type server struct {
@@ -110,7 +109,7 @@ func (srv *server) send(subject, body string) error {
 	}
 
 	if !ok {
-		return xerrors.Errorf("could not send emails: %w", err)
+		return fmt.Errorf("could not send emails: %w", err)
 	}
 	log.Printf("emails sent successfully")
 
