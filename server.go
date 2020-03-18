@@ -14,6 +14,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sbinet-attac63/mail-attac63/auth"
 	gomail "gopkg.in/gomail.v2"
 )
 
@@ -92,12 +93,12 @@ func (srv *server) send(subject, body string) error {
 	body = htmlify(body)
 
 	for _, rcpt := range rcpts {
-		m.SetHeader("From", user)
+		m.SetHeader("From", auth.Usr)
 		m.SetHeader("Bcc", rcpt)
 		m.SetHeader("Subject", subject)
 		m.SetBody("text/html", body)
 
-		d := gomail.NewDialer(smtp, 465, user, passwd)
+		d := gomail.NewDialer(auth.Srv, 465, auth.Usr, auth.Pwd)
 		e := d.DialAndSend(m)
 		if e != nil {
 			ok = false
@@ -118,6 +119,9 @@ func (srv *server) send(subject, body string) error {
 
 func (srv *server) loadAddresses() []string {
 	var addrs []string
+	if srv.dbg {
+		return dbgAddrs
+	}
 
 	f, err := os.Open("./liste.csv")
 	if err != nil {

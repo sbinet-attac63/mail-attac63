@@ -2,6 +2,8 @@ github.com/IntelligenceX/fileconversion v0.0.0-20191030112448-1b64e2d06ace h1:fD
 github.com/IntelligenceX/fileconversion v0.0.0-20191030112448-1b64e2d06ace/go.mod h1:yplSo+6ZAI1Vo5ZZ2lnm1vGarL4C3uIVlT04QRsp9f4=
 github.com/extrame/goyymmdd v0.0.0-20181026012948-914eb450555b h1:AGYUUXY0I4wDMy1Fiv5FooHQUNJo/3yyB6AuhzwThDM=
 github.com/extrame/goyymmdd v0.0.0-20181026012948-914eb450555b/go.mod h1:xbpgo9r3xURoPa/l3sLKLGcnWlkz9UkfFsQ7lW0S6h8=
+github.com/gomarkdown/markdown v0.0.0-20200316172748-fd1f3374857d h1:cFE/VFoUSjvIjrkI3YHGUYReJTIPN4fl2etwblBZfgg=
+github.com/gomarkdown/markdown v0.0.0-20200316172748-fd1f3374857d/go.mod h1:aii0r/K0ZnHv7G0KF7xy1v0A7s2Ljrb5byB7MO5p6TU=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
@@ -11,6 +13,7 @@ github.com/tealeg/xlsx v1.0.5 h1:+f8oFmvY8Gw1iUXzPk+kz+4GpbDZPK1FhPiQRd+ypgE=
 github.com/tealeg/xlsx v1.0.5/go.mod h1:btRS8dz54TDnvKNosuAqxrM1QgN1udgk9O34bDCnORM=
 github.com/toqueteos/webbrowser v1.2.0 h1:tVP/gpK69Fx+qMJKsLE7TD8LuGWPnEV71wBN9rrstGQ=
 github.com/toqueteos/webbrowser v1.2.0/go.mod h1:XWoZq4cyp9WeUeak7w7LXRUQf1F1ATJMir8RTqb4ayM=
+golang.org/dl v0.0.0-20190829154251-82a15e2f2ead/go.mod h1:IUMfjQLJQd4UTqG1Z90tenwKoCX93Gn3MAQJMOSBsDQ=
 golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=
 golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=

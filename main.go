@@ -13,11 +13,9 @@ import (
 )
 
 var (
-	user   = "username"
-	passwd = "secret"
-	smtp   = "smtp.example.com"
-
 	doDebug = flag.Bool("dbg", true, "enable debug mode")
+
+	dbgAddrs []string
 )
 
 func main() {
